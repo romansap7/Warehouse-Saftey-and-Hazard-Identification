@@ -1,5 +1,5 @@
 {
-  "framework": null,
-  "buildCommand": null,
-  "cleanUrls": true
+  "builds": [
+    { "src": "**/*", "use": "@vercel/static" }
+  ]
 }

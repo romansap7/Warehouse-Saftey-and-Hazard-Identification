@@ -1,0 +1,5 @@
+Please open files using Visual Studio Code with Liveserver.
+Sometimes web doesn't support opening from the folder.
+For detailed project documentation, code and design meet us on GitHub: https://github.com/romansap7/Warehouse-Saftey-and-Hazard-Implementation
+
+For Figma Designs - https://www.figma.com/make/JKhBQUe9BBVb4IOiGzyqLn/QuickShip-Safety-System-Design?fullscreen=1&t=RHvYjZyKQ7izW4xv-1

@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QuickShip - Inspection Data & Analytics</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- A-Frame for 360° View -->
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+
+    <style>
+      /* ==================== CORE SYSTEM COLORS ==================== */
+      :root {
+        --sys-blue: #2e8b57;
+        --sys-blue-light: #3b82f6;
+        --sys-coffee: #6f4e37;
+        --sys-brown: #4b3621;
+        --sys-black: #111111;
+        --sys-black-bg: #0f172a;
+        --sys-silver: #e5e7eb;
+        --sys-white: #ffffff;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: var(--sys-white);
+        color: var(--sys-black);
+        transition: background-color 0.3s ease;
+      }
+
+      /* ==================== ENHANCED UI/UX ==================== */
+      /* Smooth transitions for all interactive elements */
+      .btn,
+      .card,
+      .nav-link,
+      .form-control {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      /* Navigation (Enhanced) */
+      .navbar {
+        background-color: var(--sys-blue) !important;
+        padding: 1rem 0;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .navbar-brand {
+        color: white !important;
+        font-weight: 700;
+        font-size: 1.5rem;
+      }
+
+      .nav-link {
+        color: rgba(255, 255, 255, 0.9) !important;
+        position: relative;
+        padding: 0.5rem 1rem;
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: var(--sys-coffee);
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+      }
+
+      .nav-link:hover::after,
+      .nav-link.active::after {
+        width: 80%;
+      }
+
+      .nav-link:hover,
+      .nav-link.active {
+        color: white !important;
+      }
+
+      /* Cards with hover effect */
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+      }
+
+      /* Buttons with better hover states */
+      .btn-primary-sys {
+        background-color: black;
+        border-color: var(--sys-blue);
+        color: black;
+        font-weight: 500;
+        padding: 0.5rem 1.5rem;
+      }
+
+      .btn-primary-sys:hover {
+        color: black;
+        border-color: var(--sys-blue-light);
+        transform: translateY(-2px);
+      }
+
+      /* ==================== 360 TOGGLE BUTTON ==================== */
+      .btn-360-toggle {
+        background: linear-gradient(
+          135deg,
+          var(--sys-coffee),
+          var(--sys-brown)
+        );
+        color: white;
+        border: none;
+        font-weight: 600;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn-360-toggle:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .btn-360-toggle i {
+        margin-right: 0.5rem;
+        font-size: 1.2rem;
+      }
+
+      /* ==================== 360 VIEW SECTION (Collapsible) ==================== */
+      #view360Section {
+        display: none;
+        animation: fadeIn 0.5s ease;
+      }
+
+      #view360Section.show {
+        display: block;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .view-360-container {
+        height: 500px;
+        background-color: var(--sys-black);
+        border: 4px solid var(--sys-coffee);
+        position: relative;
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      }
+
+      /* A-Frame Scene Styling */
+      a-scene {
+        width: 100%;
+        height: 100%;
+      }
+
+      .overlay-360-controls {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(15, 23, 42, 0.9);
+        padding: 10px 20px;
+        border-radius: 30px;
+        display: flex;
+        gap: 15px;
+        border: 1px solid var(--sys-blue);
+        backdrop-filter: blur(10px);
+        z-index: 999;
+      }
+
+      /* A-Frame UI Improvements */
+      .a-enter-vr-button {
+        position: absolute !important;
+        bottom: 20px !important;
+        right: 20px !important;
+        z-index: 1000 !important;
+      }
+
+      /* ==================== ANALYTICS SECTION (Enhanced) ==================== */
+      .card-silver {
+        background-color: var(--sys-silver);
+        border: none;
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      .card-header-coffee {
+        background-color: var(--sys-coffee);
+        color: white;
+        font-weight: 600;
+        padding: 1rem 1.5rem;
+      }
+
+      .time-btn {
+        border: 1px solid var(--sys-coffee);
+        color: var(--sys-brown);
+        background: white;
+        font-size: 0.9rem;
+        font-weight: 500;
+        padding: 0.4rem 1rem;
+        border-radius: 6px;
+      }
+
+      .time-btn.active,
+      .time-btn:hover {
+        background-color: var(--sys-coffee);
+        color: white;
+        transform: translateY(-2px);
+      }
+
+      .stat-number {
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--sys-blue);
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .progress {
+        height: 12px;
+        border-radius: 10px;
+      }
+
+      /* ==================== CRUD TABLE (Enhanced) ==================== */
+      .table-header {
+        background-color: var(--sys-silver);
+        font-weight: 600;
+      }
+
+      .table > tbody > tr:hover {
+        background-color: rgba(31, 78, 216, 0.05);
+      }
+
+      .btn-sm {
+        border-radius: 6px;
+      }
+
+      /* ==================== FOOTER ==================== */
+      footer {
+        background-color: var(--sys-black-bg);
+        color: var(--sys-silver);
+        padding-top: 3rem;
+        border-top: 4px solid var(--sys-coffee);
+      }
+
+      /* ==================== TRAINING MODAL ==================== */
+      .training-step {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        background: rgba(31, 78, 216, 0.05);
+        border-radius: 8px;
+        border-left: 4px solid var(--sys-blue);
+      }
+
+      .training-step i {
+        font-size: 2rem;
+        color: var(--sys-blue);
+        margin-right: 1.5rem;
+        width: 40px;
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- 1. NAVIGATION -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+      <div class="container">
+        <a class="nav-link active" href="#">Inspection Data</a>
+        <button
+          class="navbar-toggler border-0 text-white"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto gap-3">
+            <li> <button class="btn btn-360-toggle" onclick="toggle360View()">
+            <i class="fas fa-vr-cardboard"></i>
+            <span id="toggleBtnText">Show 360° View</span>
+          </button></li>
+          
+            <li class="nav-item"><a class="nav-link" href="#">Reports</a></li>
+            <li><a href="home.html" class="btn btn-outline-secondary bg-white text-black">
+            <i class="fas fa-arrow-left me-2"></i>Back to Home
+          </a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- 2. HEADER & 360 TOGGLE -->
+    <div class="container mt-4">
+      <div
+        class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3"
+      >
+        <div>
+          <h2 class="fw-bold">Warehouse Inspection Hub</h2>
+          <p class="text-secondary mb-0">
+            Real-time hazard visualization and data logs.
+          </p>
+        </div>
+       
+      </div>
+    </div>
+
+    <!-- 3. 360 DEGREE VIEW SECTION (Collapsible) -->
+    <div class="container mb-5" id="view360Section">
+      <div class="card card-silver">
+        <div
+          class="card-header-coffee d-flex justify-content-between align-items-center"
+        >
+          <span
+            ><i class="fas fa-vr-cardboard me-2"></i>360° Warehouse Floor
+            View</span
+          >
+          <button
+            class="btn btn-sm btn-info"
+            data-bs-toggle="modal"
+            data-bs-target="#trainingModal"
+          >
+            <i class="fas fa-question-circle me-1"></i>Training
+          </button>
+        </div>
+        <div class="card-body p-0">
+          <!-- 360 Container with A-Frame -->
+          <div class="view-360-container" id="panoramaContainer">
+            <a-scene embedded vr-mode-ui="enabled: true">
+              <!-- 360 Panorama Image -->
+              <a-sky
+                id="sky"
+                src="https://images.unsplash.com/photo-1587293852726-70cdb56c2866?ixlib=rb-1.2.1&auto=format&fit=crop&w=2000&q=80"
+                rotation="0 0 0"
+              >
+              </a-sky>
+
+              <!-- Camera with Custom Controls -->
+              <a-camera
+                id="camera"
+                look-controls="enabled: true"
+                wasd-controls="enabled: false"
+              >
+              </a-camera>
+            </a-scene>
+
+            <!-- Controls Overlay -->
+            <div class="overlay-360-controls">
+              <button
+                class="btn btn-sm btn-outline-light rounded-circle"
+                onclick="panCamera('left')"
+              >
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <span class="text-white align-self-center small"
+                >Click & Drag to Rotate</span
+              >
+              <button
+                class="btn btn-sm btn-outline-light rounded-circle"
+                onclick="panCamera('right')"
+              >
+                <i class="fas fa-chevron-right"></i>
+              </button>
+              <button
+                class="btn btn-sm btn-outline-warning ms-2"
+                onclick="enterVRMode()"
+              >
+                <i class="fas fa-glasses"></i> VR
+              </button>
+            </div>
+          </div>
+          <div class="p-3 bg-white border-top">
+            <small class="text-muted"
+              ><i class="fas fa-info-circle me-1"></i> Powered by
+              <strong>A-Frame</strong>. For best experience, use a modern
+              browser and drag to explore the environment.
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. ANALYTICS DASHBOARD -->
+    <div class="container mb-5">
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <h3 class="fw-bold">
+            <i class="fas fa-chart-pie me-2" style="color: var(--sys-blue)"></i
+            >Safety Analytics
+          </h3>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <!-- Timeline Filters -->
+          <div class="btn-group" role="group">
+            <button
+              type="button"
+              class="btn time-btn"
+              onclick="updateAnalytics('5yr', this)"
+            >
+              5 Years
+            </button>
+            <button
+              type="button"
+              class="btn time-btn"
+              onclick="updateAnalytics('3yr', this)"
+            >
+              3 Years
+            </button>
+            <button
+              type="button"
+              class="btn time-btn"
+              onclick="updateAnalytics('1yr', this)"
+            >
+              1 Year
+            </button>
+            <button
+              type="button"
+              class="btn time-btn"
+              onclick="updateAnalytics('6mo', this)"
+            >
+              6 Months
+            </button>
+            <button
+              type="button"
+              class="btn time-btn active"
+              onclick="updateAnalytics('week', this)"
+            >
+              This Week
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <!-- Score Card -->
+        <div class="col-md-4">
+          <div class="card card-silver h-100 p-4 text-center">
+            <h5 class="text-muted">Safety Compliance Score</h5>
+            <div class="stat-number mt-2" id="safetyScore">98%</div>
+            <div class="progress mt-3" style="height: 10px">
+              <div
+                class="progress-bar bg-success"
+                id="scoreBar"
+                role="progressbar"
+                style="width: 98%"
+              ></div>
+            </div>
+            <p class="small text-muted mt-2" id="scoreText">
+              Excellent compliance this week.
+            </p>
+          </div>
+        </div>
+
+        <!-- Incidents Data -->
+        <div class="col-md-4">
+          <div class="card card-silver h-100 p-4">
+            <h5 class="text-muted text-center">Incidents Reported</h5>
+            <div class="d-flex justify-content-between mt-4 border-bottom pb-2">
+              <span>Total Hazards:</span>
+              <strong id="totalHazards">12</strong>
+            </div>
+            <div class="d-flex justify-content-between mt-3 border-bottom pb-2">
+              <span>Near Misses:</span>
+              <strong id="nearMisses">3</strong>
+            </div>
+            <div class="d-flex justify-content-between mt-3">
+              <span>Critical Accidents:</span>
+              <strong class="text-danger" id="criticalAccidents">0</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Categories Chart (Simulated) -->
+        <div class="col-md-4">
+          <div class="card card-silver h-100 p-4">
+            <h5 class="text-muted mb-3">Hazard Implementation Type</h5>
+
+            <small>Materials Handling</small>
+            <div class="progress mb-2" style="height: 6px">
+              <div
+                class="progress-bar"
+                id="barMat"
+                style="width: 40%; background-color: var(--sys-coffee)"
+              ></div>
+            </div>
+
+            <small>Electrical</small>
+            <div class="progress mb-2" style="height: 6px">
+              <div
+                class="progress-bar bg-warning"
+                id="barElec"
+                style="width: 25%"
+              ></div>
+            </div>
+
+            <small>Spills / Chemical</small>
+            <div class="progress mb-2" style="height: 6px">
+              <div
+                class="progress-bar bg-danger"
+                id="barChem"
+                style="width: 10%"
+              ></div>
+            </div>
+
+            <small>Automation/Robots</small>
+            <div class="progress" style="height: 6px">
+              <div
+                class="progress-bar bg-info"
+                id="barAuto"
+                style="width: 25%"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. CRUD REPORT SECTION -->
+    <div class="container mb-5">
+      <div class="row">
+        <!-- Form Section -->
+        <div class="col-lg-4 mb-4">
+          <div class="card border-0 shadow-sm">
+            <div class="card-header-coffee">
+              <i class="fas fa-plus-circle me-2"></i>Add / Edit Report
+            </div>
+            <div class="card-body bg-light">
+              <form id="crudForm" onsubmit="handleFormSubmit(event)">
+                <input type="hidden" id="reportId" />
+
+                <div class="mb-3">
+                  <label class="form-label small fw-bold">Hazard Title</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="reportTitle"
+                    required
+                    placeholder="e.g., Oil Spill Aisle 4"
+                  />
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label small fw-bold">Category</label>
+                  <select class="form-select" id="reportCategory">
+                    <option value="Mechanical">Mechanical</option>
+                    <option value="Chemical">Chemical</option>
+                    <option value="Electrical">Electrical</option>
+                    <option value="General Safety">General Safety</option>
+                  </select>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label small fw-bold">Date Found</label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="reportDate"
+                    required
+                  />
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label small fw-bold"
+                    >Implementation Status</label
+                  >
+                  <select class="form-select" id="reportStatus">
+                    <option value="Pending">Pending</option>
+                    <option value="Inprogress">In Progress</option>
+                    <option value="Resolved">Resolved</option>
+                  </select>
+                </div>
+
+                <div class="d-grid gap-2">
+                  <button
+                    type="submit"
+                    class="btn btn-primary-sys"
+                    id="submitBtn"
+                  >
+                    Submit Report
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-secondary btn-sm"
+                    onclick="resetForm()"
+                    style="display: none"
+                    id="cancelBtn"
+                  >
+                    Cancel Edit
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Table Section -->
+        <div class="col-lg-8">
+          <div class="card border-0 shadow-sm h-100">
+            <div class="card-header bg-white border-bottom">
+              <h5 class="mb-0 fw-bold">Hazard Implementation Log</h5>
+            </div>
+            <div class="card-body p-0 table-responsive">
+              <table class="table table-hover mb-0 align-middle">
+                <thead class="table-header text-secondary">
+                  <tr>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th class="text-end">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="reportTableBody">
+                  <!-- Data rendered by JS -->
+                </tbody>
+              </table>
+            </div>
+            <div class="card-footer bg-white text-muted small">
+              Showing all active reports.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. FOOTER -->
+    <footer class="text-center text-lg-start">
+      <div class="container pb-3">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <h5 class="text-white mb-3">QuickShip Safety System</h5>
+            <p class="small">
+              Ensuring warehouse safety through data-driven implementation.
+            </p>
+          </div>
+        </div>
+        <div class="text-center pt-3 border-top border-secondary mt-3">
+          <small
+            >© 2025 QuickShip.
+            <a href="home.html" class="text-decoration-none text-info"
+              >Return Home</a
+            ></small
+          >
+        </div>
+      </div>
+    </footer>
+
+    <!-- ==================== TRAINING MODAL ==================== -->
+    <div class="modal fade" id="trainingModal" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header" style="background-color: var(--sys-silver)">
+            <h5 class="modal-title fw-bold">
+              <i
+                class="fas fa-graduation-cap me-2"
+                style="color: var(--sys-blue)"
+              ></i>
+              360° View Training Guide
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p class="mb-4">
+              Welcome to the 360° Warehouse Inspection View! Here's how to
+              navigate the environment:
+            </p>
+
+            <div class="training-step">
+              <i class="fas fa-mouse"></i>
+              <div>
+                <strong>Mouse Interaction</strong><br />
+                Click and drag your mouse anywhere in the 360° view to look
+                around the warehouse. Move in any direction to explore.
+              </div>
+            </div>
+
+            <div class="training-step">
+              <i class="fas fa-hand-pointer"></i>
+              <div>
+                <strong>Touch Controls (Mobile/Tablet)</strong><br />
+                On touch devices, simply swipe your finger across the screen to
+                pan the camera and explore the environment.
+              </div>
+            </div>
+
+            <div class="training-step">
+              <i class="fas fa-arrows-alt-h"></i>
+              <div>
+                <strong>Arrow Buttons</strong><br />
+                Use the left/right arrow buttons below the view to automatically
+                pan the camera in that direction.
+              </div>
+            </div>
+
+            <div class="training-step">
+              <i class="fas fa-vr-cardboard"></i>
+              <div>
+                <strong>VR Mode</strong><br />
+                Click the VR button to enter virtual reality mode. Use a Google
+                Cardboard or compatible VR headset for an immersive experience.
+              </div>
+            </div>
+
+            <div class="training-step">
+              <i class="fas fa-expand"></i>
+              <div>
+                <strong>Fullscreen</strong><br />
+                Click the fullscreen button in the bottom-right corner of the
+                360° view to expand it for better visibility.
+              </div>
+            </div>
+
+            <div class="alert alert-info mt-4 mb-0">
+              <i class="fas fa-lightbulb me-2"></i>
+              <strong>Tip:</strong> The 360° view uses A-Frame technology. For
+              the best experience, ensure your browser supports WebGL and you
+              have a stable internet connection.
+            </div>
+          </div>
+          <div class="modal-footer">
+            <label class="me-auto">
+              <input type="checkbox" id="dontShowAgain" /> Don't show this again
+            </label>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary-sys"
+              data-bs-dismiss="modal"
+            >
+              Start Exploring
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+   
+   <script>
+      // --- 1. 360 View Toggle Logic ---
+      let is360ViewVisible = false;
+
+      function toggle360View() {
+        const section = document.getElementById("view360Section");
+        const buttonText = document.getElementById("toggleBtnText");
+        const toggleBtn = document.querySelector(".btn-360-toggle i");
+
+        is360ViewVisible = !is360ViewVisible;
+
+        if (is360ViewVisible) {
+          section.classList.add("show");
+          buttonText.textContent = "Hide 360° View";
+          toggleBtn.className = "fas fa-times me-2";
+
+          // Check if user wants to see training
+          if (!localStorage.getItem("skip360Training")) {
+            setTimeout(() => {
+              const modal = new bootstrap.Modal(
+                document.getElementById("trainingModal")
+              );
+              modal.show();
+            }, 500);
+          }
+        } else {
+          section.classList.remove("show");
+          buttonText.textContent = "Show 360° View";
+          toggleBtn.className = "fas fa-vr-cardboard me-2";
+        }
+      }
+
+      // --- 2. A-Frame 360 Controls ---
+      let cameraRotation = { x: 0, y: 0 };
+
+      function panCamera(direction) {
+        const sky = document.getElementById("sky");
+        const currentRotation = sky.getAttribute("rotation");
+        let newY = currentRotation.y + (direction === "right" ? -30 : 30);
+
+        sky.setAttribute(
+          "animation",
+          `property: rotation; to: ${currentRotation.x} ${newY} ${currentRotation.z}; dur: 500; easing: easeInOutQuad`
+        );
+      }
+
+      function enterVRMode() {
+        const scene = document.querySelector("a-scene");
+        if (scene && scene.enterVR) {
+          scene.enterVR();
+        }
+      }
+
+      // --- 3. Training Modal Logic ---
+      document.addEventListener("DOMContentLoaded", () => {
+        const dontShowCheckbox = document.getElementById("dontShowAgain");
+
+        // Load preference
+        if (localStorage.getItem("skip360Training")) {
+          dontShowCheckbox.checked = true;
+        }
+
+        // Save preference
+        dontShowCheckbox.addEventListener("change", (e) => {
+          if (e.target.checked) {
+            localStorage.setItem("skip360Training", "true");
+          } else {
+            localStorage.removeItem("skip360Training");
+          }
+        });
+      });
+
+      // --- 4. Analytics Logic (Unchanged) ---
+      const analyticsData = {
+        "5yr": {
+          score: 72,
+          text: "Needs Improvement",
+          hazards: 4500,
+          miss: 120,
+          crit: 45,
+          bars: [30, 30, 20, 20],
+        },
+        "3yr": {
+          score: 78,
+          text: "Average Safety",
+          hazards: 2100,
+          miss: 80,
+          crit: 15,
+          bars: [40, 25, 15, 20],
+        },
+        "1yr": {
+          score: 85,
+          text: "Good Progress",
+          hazards: 650,
+          miss: 40,
+          crit: 5,
+          bars: [50, 20, 10, 20],
+        },
+        "6mo": {
+          score: 92,
+          text: "High Standards",
+          hazards: 120,
+          miss: 15,
+          crit: 1,
+          bars: [30, 10, 5, 55],
+        },
+        week: {
+          score: 98,
+          text: "Excellent compliance",
+          hazards: 12,
+          miss: 3,
+          crit: 0,
+          bars: [40, 25, 10, 25],
+        },
+      };
+
+      function updateAnalytics(period, btnElement) {
+        document
+          .querySelectorAll(".time-btn")
+          .forEach((btn) => btn.classList.remove("active"));
+        btnElement.classList.add("active");
+
+        const data = analyticsData[period];
+        document.getElementById("safetyScore").innerText = data.score + "%";
+        document.getElementById("scoreBar").style.width = data.score + "%";
+
+        const sb = document.getElementById("scoreBar");
+        sb.className = `progress-bar ${
+          data.score > 80
+            ? "bg-success"
+            : data.score > 60
+            ? "bg-warning"
+            : "bg-danger"
+        }`;
+
+        document.getElementById("scoreText").innerText = data.text;
+        document.getElementById("totalHazards").innerText = data.hazards;
+        document.getElementById("nearMisses").innerText = data.miss;
+        document.getElementById("criticalAccidents").innerText = data.crit;
+
+        document.getElementById("barMat").style.width = data.bars[0] + "%";
+        document.getElementById("barElec").style.width = data.bars[1] + "%";
+        document.getElementById("barChem").style.width = data.bars[2] + "%";
+        document.getElementById("barAuto").style.width = data.bars[3] + "%";
+      }
+
+      // --- 5. CRUD System Logic (Unchanged) ---
+      let reports = [
+        {
+          id: 1,
+          title: "Forklift Brakes Issue",
+          category: "Mechanical",
+          date: "2023-11-28",
+          status: "In Progress",
+        },
+        {
+          id: 2,
+          title: "Exposed Wire Zone B",
+          category: "Electrical",
+          date: "2023-11-29",
+          status: "Pending",
+        },
+        {
+          id: 3,
+          title: "Spill Cleaned Aisle 2",
+          category: "Chemical",
+          date: "2023-11-30",
+          status: "Resolved",
+        },
+      ];
+
+      function renderTable() {
+        const tbody = document.getElementById("reportTableBody");
+        tbody.innerHTML = "";
+
+        reports.forEach((report) => {
+          let badgeClass =
+            report.status === "Resolved"
+              ? "bg-success"
+              : report.status === "Pending"
+              ? "bg-danger"
+              : "bg-warning text-dark";
+
+          const row = `
+                    <tr>
+                        <td class="fw-bold">${report.title}</td>
+                        <td><span class="badge bg-secondary">${report.category}</span></td>
+                        <td>${report.date}</td>
+                        <td><span class="badge ${badgeClass}">${report.status}</span></td>
+                        <td class="text-end">
+                            <button class="btn btn-sm btn-outline-primary me-1" onclick="editReport(${report.id})">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger" onclick="deleteReport(${report.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+          tbody.innerHTML += row;
+        });
+      }
+
+     async function  handleFormSubmit(e) {
+        e.preventDefault();
+        const id = document.getElementById("reportId").value;
+        const title = document.getElementById("reportTitle").value;
+        const category = document.getElementById("reportCategory").value;
+        const dateInput = document.getElementById("reportDate").value;
+        const status = document.getElementById("reportStatus").value;
+        if (!dateInput) {
+  alert("Please select a date");
+  return; // stop submission
+}
+
+// Safe conversion to ISO string
+const date = new Date(dateInput + "T00:00:00Z").toISOString();
+
+
+    
+
+    try {
+      const response = await fetch(
+        "https://quickship-backend-finalize.vercel.app/api/report",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            title,
+            category,
+            date,
+            status
+            
+          })
+        }
+      );
+
+      const rawText = await response.text();
+
+      let data;
+      try {
+        data = JSON.parse(rawText);
+      } catch {
+        data = { message: rawText };
+      }
+
+      if (!response.ok) {
+        alert(data.message || "Report Submission failed");
+        return;
+      }
+
+      alert(data.message || "Report submitted successfully!");
+
+    } catch (error) {
+      console.error(error);
+      alert("Unable to connect to server");
+    }
+  
+
+        if (id) {
+          const index = reports.findIndex((r) => r.id == id);
+          reports[index] = { id: parseInt(id), title, category, date, status };
+        } else {
+          const newId =
+            reports.length > 0 ? Math.max(...reports.map((r) => r.id)) + 1 : 1;
+          reports.push({ id: newId, title, category, date, status });
+        }
+
+
+        renderTable();
+        resetForm();
+      }
+
+      function editReport(id) {
+        const report = reports.find((r) => r.id === id);
+        document.getElementById("reportId").value = report.id;
+        document.getElementById("reportTitle").value = report.title;
+        document.getElementById("reportCategory").value = report.category;
+        document.getElementById("reportDate").value = report.date;
+        document.getElementById("reportStatus").value = report.status;
+
+        document.getElementById("submitBtn").innerText = "Update Report";
+        document
+          .getElementById("submitBtn")
+          .classList.remove("btn-primary-sys");
+        document.getElementById("submitBtn").classList.add("btn-warning");
+        document.getElementById("cancelBtn").style.display = "inline-block";
+      }
+
+      function deleteReport(id) {
+        if (confirm("Are you sure you want to delete this log?")) {
+          reports = reports.filter((r) => r.id !== id);
+          renderTable();
+        }
+      }
+
+      function resetForm() {
+        document.getElementById("crudForm").reset();
+        document.getElementById("reportId").value = "";
+        document.getElementById("submitBtn").innerText = "Submit Report";
+        document.getElementById("submitBtn").classList.add("btn-primary-sys");
+        document.getElementById("submitBtn").classList.remove("btn-warning");
+        document.getElementById("cancelBtn").style.display = "none";
+      }
+
+      // Initialize on load
+      document.addEventListener("DOMContentLoaded", () => {
+        renderTable();
+        document.getElementById("reportDate").valueAsDate = new Date();
+      });
+    </script>
+    <!-- <script>
+  const form = document.getElementById("crudForm");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const title = document.getElementById("reportTitle").value;
+    const category = document.getElementById("reportCategory").value;
+    const dateInput = document.getElementById("reportDate").value;
+    console.log("dateInput:", dateInput);
+    console.log("title:", title);
+    console.log("category:", category);
+    
+
+
+if (!dateInput) {
+  alert("Please select a date");
+  return; // stop submission
+}
+
+// Safe conversion to ISO string
+const date = new Date(dateInput + "T00:00:00Z").toISOString();
+
+    const status = document.getElementById("reportStatus").value;
+    
+
+    try {
+      const response = await fetch(
+        "https://quickship-backend-finalize.vercel.app/api/report",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            title,
+            category,
+            date,
+            status
+            
+          })
+        }
+      );
+
+      const rawText = await response.text();
+
+      let data;
+      try {
+        data = JSON.parse(rawText);
+      } catch {
+        data = { message: rawText };
+      }
+
+      if (!response.ok) {
+        alert(data.message || "Report Submission failed");
+        return;
+      }
+
+      alert(data.message || "Report submitted successfully!");
+      form.reset();
+
+    } catch (error) {
+      console.error(error);
+      alert("Unable to connect to server");
+    }
+  });
+</script> -->
+  </body>
+</html

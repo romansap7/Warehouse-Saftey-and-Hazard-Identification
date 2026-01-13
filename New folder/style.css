@@ -1,0 +1,157 @@
+        /* ==================== CORE SYSTEM COLORS ==================== */
+        :root {
+            --sys-blue: #1F4ED8;         /* Trust, Control */
+            --sys-blue-light: #3B82F6;   /* Hover */
+            --sys-coffee: #6F4E37;       /* Industrial Grounding */
+            --sys-brown: #4B3621;        /* Deep Industrial */
+            --sys-black: #111111;        /* Primary Text */
+            --sys-black-bg: #0F172A;     /* Footer Background */
+            --sys-silver: #E5E7EB;       /* Card Backgrounds */
+            --sys-white: #FFFFFF;        /* Main Content */
+            --sys-warning: #F59E0B;      /* Amber */
+            --sys-critical: #DC2626;     /* Red */
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--sys-black);
+            background-color: var(--sys-white);
+        }
+
+        /* ==================== NAVIGATION ==================== */
+        .navbar {
+            background-color: #2e8b57 !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .nav-link {
+            color: rgba(255,255,255,0.9) !important;
+            font-weight: 500;
+            margin: 0 0.5rem;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        /* Active/Hover State: Coffee Underline */
+        .nav-link:hover, .nav-link.active {
+            color: white !important;
+            border-bottom-color: var(--sys-coffee);
+        }
+
+        .dropdown-menu {
+            border-top: 3px solid var(--sys-coffee);
+            border-radius: 0 0 5px 5px;
+        }
+
+        /* ==================== CAROUSEL ==================== */
+        .carousel-item {
+            height: 60vh;
+            background-color: var(--sys-black);
+            position: relative;
+        }
+
+        .carousel-item img {
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+            opacity: 0.6; /* Darkens image for text readability */
+        }
+
+        .carousel-caption {
+            background: rgba(15, 23, 42, 0.7); /* Black-bg transparent */
+            padding: 2rem;
+            border-left: 5px solid var(--sys-blue);
+            bottom: 20%;
+        }
+
+        /* ==================== CONTENT CARDS ==================== */
+        .industrial-card {
+            border: none;
+            background-color: var(--sys-silver);
+            height: 100%;
+            transition: transform 0.3s;
+        }
+        
+        .industrial-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header-coffee {
+            background-color: var(--sys-coffee);
+            color: white;
+            font-weight: 600;
+            padding: 1rem;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .btn-primary-sys {
+            background-color: var(--sys-blue);
+            border-color: var(--sys-blue);
+            padding: 0.5rem 1.5rem;
+        }
+
+        .btn-primary-sys:hover {
+            background-color: var(--sys-blue-light);
+            border-color: var(--sys-blue-light);
+        }
+
+        /* ==================== FOOTER ==================== */
+        footer {
+            background-color: #2e8b57;
+            color: var(--sys-silver);
+            padding-top: 4rem;
+            padding-bottom: 2rem;
+            border-top: 4px solid var(--sys-coffee);
+        }
+
+        footer h5 {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* Footer Form Inputs */
+        .form-control-dark {
+            background-color: rgba(255,255,255,0.1);
+            border: 1px solid #4B5563;
+            color: white;
+        }
+        
+        .form-control-dark:focus {
+            background-color: rgba(255,255,255,0.2);
+            border-color: var(--sys-blue);
+            color: white;
+            box-shadow: none;
+        }
+
+        /* Custom Checkbox Dropdown for Footer */
+        .custom-dropdown-panel {
+            display: none;
+            background: var(--sys-silver);
+            border: 1px solid var(--sys-coffee);
+            max-height: 200px;
+            overflow-y: auto;
+            position: absolute;
+            width: 100%;
+            z-index: 1000;
+            padding: 0.5rem;
+            border-radius: 4px;
+            color: var(--sys-black);
+        }

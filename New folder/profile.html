@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickShip - Profile & Team</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Caveat:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==================== CORE SYSTEM COLORS ==================== */
+        :root {
+            --sys-blue: #1F4ED8;
+            --sys-blue-light: #3B82F6;
+            --sys-coffee: #6F4E37;
+            --sys-brown: #4B3621;
+            --sys-black: #111111;
+            --sys-black-bg: #0F172A;
+            --sys-silver: #E5E7EB;
+            --sys-white: #FFFFFF;
+            --sys-amber: #F59E0B;
+        }
+
+        body { font-family: 'Poppins', sans-serif; background-color: #F3F4F6; color: var(--sys-black); }
+
+        /* Navigation */
+        .navbar { background-color: #2e8b57 !important; padding: 1rem 0; }
+        .navbar-brand { color: white !important; font-weight: 700; }
+        .nav-link { color: rgba(255,255,255,0.9) !important; transition: all 0.3s ease; }
+        .nav-link:hover, .nav-link.active { color: white !important; border-bottom: 2px solid var(--sys-coffee); }
+
+        /* HERO HEADER */
+        .settings-hero {
+            background: linear-gradient(135deg, var(--sys-brown), var(--sys-coffee));
+            color: white;
+            padding: 3rem 0;
+            border-bottom: 4px solid var(--sys-amber);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        /* TAB BUTTONS */
+        .nav-pills .nav-link {
+            color: var(--sys-brown);
+            background-color: rgb(204, 105, 35);
+            border: 2px solid var(--sys-coffee);
+            margin: 0 5px 10px;
+            border-radius: 25px;
+            padding: 10px 30px;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+        .nav-pills .nav-link.active {
+            background-color: var(--sys-brown) !important;
+            color: white !important;
+            border-color: var(--sys-brown);
+            box-shadow: 0 4px 10px rgba(75, 54, 33, 0.4);
+        }
+
+        /* CARD STYLES */
+        .custom-card {
+            background: white;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            overflow: hidden;
+            border-top: 3px solid transparent;
+        }
+        .custom-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            border-top-color: var(--sys-amber);
+        }
+
+        /* TEAM MEMBER AVATARS */
+        .member-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--sys-amber), #FCD34D);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--sys-brown);
+            margin: 0 auto 1.5rem;
+            border: 4px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* QUOTES */
+        .quote-box {
+            background-color: #FFFBEB;
+            border-left: 4px solid var(--sys-amber);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+            text-align: left; /* Keep quote left aligned for readability */
+        }
+        .quote-text {
+            font-family: 'Caveat', cursive;
+            font-size: 1.2rem;
+            color: var(--sys-brown);
+            font-style: italic;
+            margin: 0;
+        }
+
+        /* SKILL BADGES */
+        .skill-badge {
+            font-size: 0.8rem;
+            background-color: rgba(111, 78, 55, 0.1);
+            color: var(--sys-brown);
+            border: 1px solid var(--sys-coffee);
+            padding: 5px 15px;
+            border-radius: 20px;
+            margin: 4px;
+            display: inline-block;
+            font-weight: 600;
+        }
+
+        /* BUTTONS */
+        .btn-primary-sys {
+            background-color: var(--sys-blue);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+        }
+        .btn-primary-sys:hover { background-color: var(--sys-blue-light); color: white; }
+
+        /* FUTURE TRENDS */
+        .trend-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+        .trend-status { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; padding: 5px 12px; border-radius: 20px; }
+        .status-research { background: #E0F2FE; color: #0284C7; }
+        .status-dev { background: #FEF3C7; color: #D97706; }
+        .status-test { background: #DCFCE7; color: #16A34A; }
+
+        /* Footer */
+        footer { background-color: #2e8b57; color: var(--sys-silver); padding-top: 3rem; border-top: 4px solid var(--sys-coffee); }
+        .form-control-dark { background-color: rgba(255,255,255,0.1); border: 1px solid #4B5563; color: white; }
+        
+        /* Dropdown Panel */
+        .custom-dropdown-panel {
+            display: none;
+            background: var(--sys-silver);
+            border: 1px solid var(--sys-coffee);
+            max-height: 200px;
+            overflow-y: auto;
+            position: absolute;
+            width: 100%;
+            z-index: 1000;
+            padding: 0.5rem;
+            border-radius: 4px;
+            color: var(--sys-black);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. NAVIGATION -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="home.html"><i class="fas fa-shipping-fast me-2"></i>QuickShip</a>
+            <button class="navbar-toggler border-0 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><i class="fas fa-bars"></i></button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="inspec.html">Inspection Data</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Topics.html">Topics</a></li>
+                    <li class="nav-item"><a class="nav-link" href="helpandResources.html">H&R</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="profile.html"><i class="fas fa-user-circle"></i> Profile</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 2. HERO HEADER -->
+    <header class="settings-hero">
+        <div class="container">
+            <h1 class="display-5 fw-bold text-warning">Team & Settings</h1>
+            <p class="lead opacity-90">Meet the creators behind the QuickShip Safety System.</p>
+        </div>
+    </header>
+
+    <!-- 3. TABS NAVIGATION -->
+    <div class="container mb-4">
+        <ul class="nav nav-pills justify-content-center" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile">Profile</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-about-tab" data-bs-toggle="pill" data-bs-target="#pills-about">Meet The Team</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-faq-tab" data-bs-toggle="pill" data-bs-target="#pills-faq">FAQ</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-trends-tab" data-bs-toggle="pill" data-bs-target="#pills-trends">Future Trends</button>
+            </li>
+        </ul>
+    </div>
+
+    <!-- 4. TAB CONTENT -->
+    <div class="container mb-5">
+        <div class="tab-content" id="pills-tabContent">
+            
+            <!-- A. PROFILE SETTINGS -->
+            <div class="tab-pane fade show active" id="pills-profile">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="custom-card p-4">
+                            <div class="text-center mb-4">
+                                <div class="member-avatar position-relative">
+                                    <i class="fas fa-user-astronaut"></i>
+                                </div>
+                                <h3 id="profileNameDisplay" class="fw-bold">QuickShip Admin</h3>
+                                <span class="badge bg-secondary">Safety Administrator</span>
+                            </div>
+                            
+                            <form onsubmit="saveProfile(event)">
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold text-muted">FULL NAME</label>
+                                    <input type="text" class="form-control" id="userName" value="QuickShip Admin">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold text-muted">ROLE</label>
+                                    <select class="form-select" id="userRole">
+                                        <option selected>Safety Administrator</option>
+                                        <option>Warehouse Manager</option>
+                                        <option>Supervisor</option>
+                                    </select>
+                                </div>
+                                <div class="d-grid gap-2 mt-4">
+                                    <button type="submit" class="btn btn-primary-sys fw-bold shadow">Save Changes</button>
+                                    <button type="button" class="btn btn-outline-danger" onclick="logout()">Logout</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- B. MEET THE TEAM (STACKED VERTICALLY) -->
+            <div class="tab-pane fade" id="pills-about">
+                <div class="text-center mb-5">
+                    <h2 class="fw-bold">The Minds Behind QuickShip</h2>
+                    <p class="text-secondary">Five passionate individuals utilizing diverse skills to revolutionize warehouse safety.</p>
+                </div>
+                
+                <!-- Vertical Stack: Using col-lg-8 mx-auto to center items one by one -->
+                <div class="row gy-5 justify-content-center">
+                    
+                    <!-- 1. MANISH MEHTA - Project Manager -->
+                    <div class="col-lg-8 col-md-10">
+                        <div class="custom-card p-5 text-center">
+                            <div class="member-avatar"><i class="fas fa-tasks"></i></div>
+                            <h3 class="fw-bold text-dark">Manish Mehta</h3>
+                            <p class="text-primary fw-bold text-uppercase">Project Manager</p>
+                            <p class="text-muted mb-4 px-md-5">The leader steering the ship. Orchestrated the project timeline, managed team deliverables, and ensured the Coffee/Industrial theme vision was executed perfectly.</p>
+                            <div class="quote-box">
+                                <p class="quote-text text-center">"A goal without a plan is just a wish. I make sure we have the plan."</p>
+                            </div>
+                            <div class="mt-3">
+                                <span class="skill-badge">Management</span>
+                                <span class="skill-badge">Theme Vision</span>
+                                <span class="skill-badge">Timeline Planning</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. ABHAY YADAV - Documentation Lead -->
+                    <div class="col-lg-8 col-md-10">
+                        <div class="custom-card p-5 text-center">
+                            <div class="member-avatar"><i class="fas fa-file-alt"></i></div>
+                            <h3 class="fw-bold text-dark">Abhay Yadav</h3>
+                            <p class="text-primary fw-bold text-uppercase">Documentation Lead</p>
+                            <p class="text-muted mb-4 px-md-5">The architect of our records. Meticulously compiled reports A1 through A7, ensuring every safety protocol and research finding was recorded with precision.</p>
+                            <div class="quote-box">
+                                <p class="quote-text text-center">"If it's not documented, it didn't happen. Precision is key."</p>
+                            </div>
+                            <div class="mt-3">
+                                <span class="skill-badge">Reports A1-A7</span>
+                                <span class="skill-badge">Editing</span>
+                                <span class="skill-badge">Quality Control</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. ROMASH SAPKOTA - Developer -->
+                    <div class="col-lg-8 col-md-10">
+                        <div class="custom-card p-5 text-center">
+                            <div class="member-avatar"><i class="fas fa-code"></i></div>
+                            <h3 class="fw-bold text-dark">Romash Sapkota</h3>
+                            <p class="text-primary fw-bold text-uppercase">Lead Developer</p>
+                            <p class="text-muted mb-4 px-md-5">The engine room. Wrote the core HTML/CSS/JS codebase, built the responsive navigation system, and implemented the interactive 360-degree view logic.</p>
+                            <div class="quote-box">
+                                <p class="quote-text text-center">"I turn coffee into code and ideas into interactive reality."</p>
+                            </div>
+                            <div class="mt-3">
+                                <span class="skill-badge">HTML/CSS/JS</span>
+                                <span class="skill-badge">360 View Logic</span>
+                                <span class="skill-badge">System Architecture</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. NISHAN SAPKOTA - Research Lead -->
+                    <div class="col-lg-8 col-md-10">
+                        <div class="custom-card p-5 text-center">
+                            <div class="member-avatar"><i class="fas fa-book-reader"></i></div>
+                            <h3 class="fw-bold text-dark">Nishan Sapkota</h3>
+                            <p class="text-primary fw-bold text-uppercase">Research Lead</p>
+                            <p class="text-muted mb-4 px-md-5">The knowledge base. Led the deep-dive research into international safety standards (OSHA/HSE) and verified all hazard categories to ensure our content is accurate.</p>
+                            <div class="quote-box">
+                                <p class="quote-text text-center">"Safety starts with understanding. I ensure our data is bulletproof."</p>
+                            </div>
+                            <div class="mt-3">
+                                <span class="skill-badge">Safety Standards</span>
+                                <span class="skill-badge">Hazard Analysis</span>
+                                <span class="skill-badge">Content Verification</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5. SEKHAR RAWAL - Design & Marketing -->
+                    <div class="col-lg-8 col-md-10">
+                        <div class="custom-card p-5 text-center">
+                            <div class="member-avatar"><i class="fas fa-bullhorn"></i></div>
+                            <h3 class="fw-bold text-dark">Sekhar Rawal</h3>
+                            <p class="text-primary fw-bold text-uppercase">Design & Marketing</p>
+                            <p class="text-muted mb-4 px-md-5">The artist. Crafted the user experience (UX) strategy, designed presentation materials, and ensured the platform feels intuitive and "sellable" to end-users.</p>
+                            <div class="quote-box">
+                                <p class="quote-text text-center">"Design isn't just how it looks, it's how it works for the user."</p>
+                            </div>
+                            <div class="mt-3">
+                                <span class="skill-badge">UI/UX Strategy</span>
+                                <span class="skill-badge">Presentation</span>
+                                <span class="skill-badge">Branding</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- C. FAQ -->
+            <div class="tab-pane fade" id="pills-faq">
+                <div class="row justify-content-center">
+                    <div class="col-lg-9">
+                        <h3 class="fw-bold mb-4 text-center">Project FAQ</h3>
+                        <div class="accordion" id="faqAccordion">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                        Why did you choose warehouse safety?
+                                    </button>
+                                </h2>
+                                <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body text-secondary">
+                                        With the rise of e-commerce, warehouses are busier than ever. We chose this topic to demonstrate how <strong>modern web technology</strong> can solve real-world industrial problems like accident prevention and compliance tracking.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                        How did the team collaborate?
+                                    </button>
+                                </h2>
+                                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body text-secondary">
+                                        Collaboration was role-based. <strong>Manish</strong> managed the timeline, <strong>Romash</strong> handled the coding, while <strong>Abhay, Nishan, and Sekhar</strong> provided the critical research, documentation, and design assets needed to fill the site with real value.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- D. FUTURE TRENDS -->
+            <div class="tab-pane fade" id="pills-trends">
+                <div class="text-center mb-5">
+                    <span class="badge bg-warning text-dark px-3 py-2 rounded-pill mb-3">VISION 2025</span>
+                    <h2 class="fw-bold">What's Brewing Next?</h2>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-md-6 col-lg-4">
+                        <div class="custom-card p-4">
+                            <div class="trend-icon">🔥</div>
+                            <h5 class="fw-bold">AI Fire Detection</h5>
+                            <p class="small text-secondary mb-3">Computer vision algorithms that detect smoke and thermal anomalies.</p>
+                            <span class="trend-status status-research">Research Phase</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="custom-card p-4">
+                            <div class="trend-icon">👁️</div>
+                            <h5 class="fw-bold">YOLO Object Tracking</h5>
+                            <p class="small text-secondary mb-3">AI identifying blocked exits and PPE compliance.</p>
+                            <span class="trend-status status-research">Research Phase</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="custom-card p-4">
+                            <div class="trend-icon">📱</div>
+                            <h5 class="fw-bold">AR Safety Training</h5>
+                            <p class="small text-secondary mb-3">Augmented Reality sessions for virtual fire drills.</p>
+                            <span class="trend-status status-test">Testing Phase</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 5. FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="row gy-5">
+                <div class="col-lg-4 col-md-6">
+                    <h5 class="text-white mb-3"><i class="fas fa-shield-alt me-2 text-warning"></i>QuickShip</h5>
+                    <p class="small">Comprehensive warehouse safety management.</p>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-white mb-3"><i class="fas fa-link me-2 text-warning"></i>Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="home.html" class="text-decoration-none text-secondary">Home</a></li>
+                        <li><a href="Topics.html" class="text-decoration-none text-secondary">Training</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-5 col-md-12">
+                    <h5 class="text-white mb-3">Contact Support</h5>
+                    <form onsubmit="event.preventDefault(); alert('Sent!');">
+                        <div class="row g-2">
+                            <div class="col-6"><input type="text" class="form-control form-control-dark" placeholder="Name"></div>
+                            <div class="col-6"><input type="email" class="form-control form-control-dark" placeholder="Email"></div>
+                            
+                            <!-- Dropdown Logic -->
+                            <div class="col-12 position-relative">
+                                <div class="form-control form-control-dark" style="cursor: pointer;" onclick="toggleFooterDropdown()">
+                                    <span id="topicPlaceholder">Select Topics...</span>
+                                    <i class="fas fa-chevron-down float-end mt-1"></i>
+                                </div>
+                                <div class="custom-dropdown-panel" id="footerDropdownPanel">
+                                    <div class="form-check p-2 border-bottom border-secondary"><input class="form-check-input" type="checkbox" value="Emergency" id="f1"><label class="form-check-label ms-2" for="f1">Emergency</label></div>
+                                    <div class="form-check p-2 border-bottom border-secondary"><input class="form-check-input" type="checkbox" value="Hazards" id="f2"><label class="form-check-label ms-2" for="f2">Hazards</label></div>
+                                    <div class="form-check p-2"><input class="form-check-input" type="checkbox" value="Robotics" id="f3"><label class="form-check-label ms-2" for="f3">Robotics</label></div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-12"><textarea class="form-control form-control-dark" rows="3" placeholder="Message"></textarea></div>
+                            <div class="col-12"><button class="btn btn-primary-sys w-100 fw-bold">Send</button></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row mt-5 pt-3 border-top border-secondary">
+                <div class="col-12 text-center small">© 2025 QuickShip Safety. Built with <i class="fas fa-heart text-warning"></i></div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function saveProfile(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            btn.innerHTML = 'Saving...';
+            setTimeout(() => { alert('Profile Updated!'); btn.innerHTML = 'Save Changes'; }, 800);
+        }
+        function logout() { confirm('Logout?') && alert('Logged out.'); }
+        
+        // Footer Dropdown Logic
+        function toggleFooterDropdown() {
+            const panel = document.getElementById('footerDropdownPanel');
+            panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+        }
+        window.onclick = function(event) {
+            if (!event.target.matches('.form-control-dark') && !event.target.matches('.form-control-dark *') && !event.target.matches('.custom-dropdown-panel') && !event.target.matches('.custom-dropdown-panel *')) {
+                document.getElementById('footerDropdownPanel').style.display = 'none';
+            }
+        }
+        document.querySelectorAll('.custom-dropdown-panel input').forEach(cb => {
+            cb.addEventListener('change', () => {
+                const selected = Array.from(document.querySelectorAll('.custom-dropdown-panel input:checked')).map(c => c.nextElementSibling.innerText);
+                document.getElementById('topicPlaceholder').innerText = selected.length ? selected.join(', ') : 'Select Topics...';
+            });
+        });
+    </script>
+</body>
+</html>

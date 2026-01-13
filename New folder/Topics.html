@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickShip - Safety Training Topics</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==================== CORE SYSTEM COLORS ==================== */
+        :root {
+            --sys-blue: #1F4ED8;
+            --sys-blue-light: #3B82F6;
+            --sys-coffee: #6F4E37;
+            --sys-brown: #4B3621;
+            --sys-black: #111111;
+            --sys-black-bg: #0F172A;
+            --sys-silver: #E5E7EB;
+            --sys-white: #FFFFFF;
+            --sys-warning: #F59E0B;
+        }
+
+        body { font-family: 'Poppins', sans-serif; background-color: #F3F4F6; color: var(--sys-black); }
+
+        /* Navigation */
+        .navbar { background-color:#2e8b57  !important; padding: 1rem 0; }
+        .navbar-brand { color: white !important; font-weight: 700; }
+        .nav-link { color: rgba(255,255,255,0.9) !important; transition: all 0.3s ease; }
+        .nav-link:hover, .nav-link.active { color: white !important; border-bottom: 2px solid var(--sys-coffee); }
+
+        /* HERO SECTION */
+        .topic-hero {
+            background: linear-gradient(rgba(75, 54, 33, 0.9), rgba(111, 78, 55, 0.9)), url('https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 4rem 0;
+            margin-bottom: 2rem;
+            border-bottom: 5px solid var(--sys-warning);
+        }
+
+        /* CARD DESIGN */
+        .topic-card {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .topic-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .card-img-wrapper {
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .topic-card:hover .card-img-wrapper img {
+            transform: scale(1.1);
+        }
+
+        /* Icon Badge */
+        .card-icon {
+            position: absolute;
+            bottom: -20px;
+            right: 20px;
+            background: var(--sys-warning);
+            color: var(--sys-black);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            border: 3px solid white;
+            z-index: 2;
+        }
+
+        /* Time Badge */
+        .time-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(15, 23, 42, 0.8);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            backdrop-filter: blur(4px);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+            flex: 1;
+            padding-top: 2rem; /* Space for icon */
+        }
+
+        .topic-title {
+            font-weight: 700;
+            color: var(--sys-brown);
+            margin-bottom: 0.5rem;
+        }
+
+        .btn-start {
+            background-color: var(--sys-blue);
+            color: white;
+            width: 100%;
+            border: none;
+            padding: 12px;
+            font-weight: 600;
+            transition: background 0.3s;
+            border-radius: 8px;
+        }
+
+        .btn-start:hover {
+            background-color: var(--sys-blue-light);
+            color: white;
+        }
+
+        /* MODAL STYLING */
+        .modal-header {
+            background-color: var(--sys-coffee);
+            color: white;
+        }
+        .btn-close { filter: invert(1); }
+        
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-left: 4px solid var(--sys-blue);
+            border-radius: 4px;
+        }
+
+        /* Footer */
+        footer { background-color:#2e8b57 ; color: var(--sys-silver); padding-top: 3rem; border-top: 4px solid var(--sys-coffee); }
+    </style>
+</head>
+<body>
+
+    <!-- 1. NAVIGATION -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="nav-link active" href="#">Topics</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                
+                   
+                
+                    <li>
+                        <a href="home.html" class="btn btn-outline-secondary bg-white text-black">
+            <i class="fas fa-arrow-left me-2"></i>Back to Home
+          </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 2. HERO SECTION -->
+    <div class="topic-hero text-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Safety Training Modules</h1>
+            <p class="lead opacity-75">Master the 6 pillars of warehouse safety. Select a module to begin.</p>
+        </div>
+    </div>
+
+    <!-- 3. TOPICS GRID -->
+    <div class="container mb-5">
+        <div class="row g-4">
+            
+            <!-- TOPIC 1: EMERGENCY PLANNING -->
+            <div class="col-lg-4 col-md-6">
+                <div class="topic-card shadow-sm">
+                    <div class="card-img-wrapper">
+                        <!-- Image: Exit Sign / Emergency Light -->
+                        <img src="https://images.fosterwebmarketing.com/923/emergency%20planning.jpg" alt="Emergency Exit">
+                        <div class="time-badge"><i class="far fa-clock me-1"></i> 15 Mins</div>
+                        <div class="card-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="topic-title">Emergency Planning</h5>
+                        <p class="small text-secondary">Master evacuation routes, fire drill protocols, and assembly point procedures.</p>
+                        <div class="d-flex justify-content-between small mb-1">
+                            <span>Progress</span>
+                            <span class="text-success fw-bold">100%</span>
+                        </div>
+                        <div class="progress mb-3" style="height: 6px;">
+                            <div class="progress-bar bg-success" style="width: 100%"></div>
+                        </div>
+                        <button class="btn btn-start" data-bs-toggle="modal" data-bs-target="#modalEmergency">
+                            >
+                            <i class="fas fa-redo me-2"></i>Review Protocol
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOPIC 2: MATERIALS HANDLING -->
+            <div class="col-lg-4 col-md-6">
+                <div class="topic-card shadow-sm">
+                    <div class="card-img-wrapper">
+                        <!-- Image: Forklift in warehouse -->
+                        <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80" alt="Forklift">
+                        <div class="time-badge"><i class="far fa-clock me-1"></i> 25 Mins</div>
+                        <div class="card-icon"><i class="fas fa-boxes"></i></div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="topic-title">Materials Handling</h5>
+                        <p class="small text-secondary">Safe operation of forklifts, ergonomic lifting techniques, and pallet stacking.</p>
+                        <div class="d-flex justify-content-between small mb-1">
+                            <span>Progress</span>
+                            <span>0%</span>
+                        </div>
+                        <div class="progress mb-3" style="height: 6px;">
+                            <div class="progress-bar" style="width: 0%"></div>
+                        </div>
+                        <button class="btn btn-start" data-bs-toggle="modal" data-bs-target="#modalMaterial">
+                            Start Module
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOPIC 3: AUTOMATION & ROBOTICS -->
+            <div class="col-lg-4 col-md-6">
+                <div class="topic-card shadow-sm">
+                    <div class="card-img-wrapper">
+                        <!-- Image: Industrial Robot Arm -->
+                        <img src="https://ifafs.in/wp-content/uploads/2024/01/Robotics-and-Automation.jpg" alt="Robotics">
+                        <div class="time-badge"><i class="far fa-clock me-1"></i> 20 Mins</div>
+                        <div class="card-icon"><i class="fas fa-robot"></i></div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="topic-title">Automation & Robotics</h5>
+                        <p class="small text-secondary">Working alongside AGVs, sensor zones, and emergency stops for machines.</p>
+                        <div class="d-flex justify-content-between small mb-1">
+                            <span>Progress</span>
+                            <span class="text-warning fw-bold">45%</span>
+                        </div>
+                        <div class="progress mb-3" style="height: 6px;">
+                            <div class="progress-bar bg-warning" style="width: 45%"></div>
+                        </div>
+                        <button class="btn btn-start" data-bs-toggle="modal" data-bs-target="#modalRobot">
+                            Continue Module
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOPIC 4: HAZARDOUS CHEMICALS -->
+            <div class="col-lg-4 col-md-6">
+                <div class="topic-card shadow-sm">
+                    <div class="card-img-wrapper">
+                        <!-- Image: Industrial Drums/Chemicals -->
+                        <img src="https://images.unsplash.com/photo-1624701928517-44c8ac49d93c?auto=format&fit=crop&w=800&q=80" alt="Chemicals">
+                        <div class="time-badge"><i class="far fa-clock me-1"></i> 30 Mins</div>
+                        <div class="card-icon"><i class="fas fa-flask"></i></div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="topic-title">Hazardous Chemicals</h5>
+                        <p class="small text-secondary">Understanding SDS, chemical labeling, and proper spill containment procedures.</p>
+                        <div class="d-flex justify-content-between small mb-1">
+                            <span>Progress</span>
+                            <span>0%</span>
+                        </div>
+                        <div class="progress mb-3" style="height: 6px;">
+                            <div class="progress-bar" style="width: 0%"></div>
+                        </div>
+                        <button class="btn btn-start" data-bs-toggle="modal" data-bs-target="#modalChemical">
+                            Start Module
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOPIC 5: ELECTRICAL HAZARDS -->
+            <div class="col-lg-4 col-md-6">
+                <div class="topic-card shadow-sm">
+                    <div class="card-img-wrapper">
+                        <!-- Image: Wires / Panel -->
+                        <img src="https://cdn.cpdonline.co.uk/wp-content/uploads/2024/09/12152712/Recognising-and-Addressing-Electrical-Hazards-in-the-Workplace-scaled.jpg" alt="Electrical">
+                        <div class="time-badge"><i class="far fa-clock me-1"></i> 20 Mins</div>
+                        <div class="card-icon"><i class="fas fa-bolt"></i></div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="topic-title">Electrical Hazards</h5>
+                        <p class="small text-secondary">Identifying exposed wires, circuit overloads, and wet environment safety.</p>
+                        <div class="d-flex justify-content-between small mb-1">
+                            <span>Progress</span>
+                            <span>0%</span>
+                        </div>
+                        <div class="progress mb-3" style="height: 6px;">
+                            <div class="progress-bar" style="width: 0%"></div>
+                        </div>
+                        <button class="btn btn-start" data-bs-toggle="modal" data-bs-target="#modalElectrical">
+                            Start Module
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TOPIC 6: LOCKOUT / TAGOUT -->
+            <div class="col-lg-4 col-md-6">
+                <div class="topic-card shadow-sm">
+                    <div class="card-img-wrapper">
+                        <!-- Image: Industrial Padlock -->
+                        <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=800&q=80" alt="LOTO">
+                        <div class="time-badge"><i class="far fa-clock me-1"></i> 35 Mins</div>
+                        <div class="card-icon"><i class="fas fa-lock"></i></div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="topic-title">Lockout / Tagout (LOTO)</h5>
+                        <p class="small text-secondary">Isolating energy sources before maintenance. The "Zero Energy" state protocol.</p>
+                        <div class="d-flex justify-content-between small mb-1">
+                            <span>Progress</span>
+                            <span>0%</span>
+                        </div>
+                        <div class="progress mb-3" style="height: 6px;">
+                            <div class="progress-bar" style="width: 0%"></div>
+                        </div>
+                        <button class="btn btn-start" data-bs-toggle="modal" data-bs-target="#modalLOTO">
+                            Start Module
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ==================== CONTENT MODALS (Popups) ==================== -->
+
+    <!-- 1. Emergency Modal -->
+    <div class="modal fade" id="modalEmergency" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-exclamation-triangle me-2"></i>Emergency Planning Protocol</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-warning">
+                        <i class="fas fa-bell me-2"></i><strong>Critical Rule:</strong> Do not use elevators during a fire alarm. Use the marked stairs.
+                    </div>
+                    <h6>Action Checklist:</h6>
+                    <div class="checklist-item">
+                        <i class="fas fa-check-circle text-success mt-1 me-3"></i>
+                        <div><strong>Know the Routes:</strong> Memorize the two nearest exits from your workstation.</div>
+                    </div>
+                    <div class="checklist-item">
+                        <i class="fas fa-check-circle text-success mt-1 me-3"></i>
+                        <div><strong>Assembly Point A:</strong> Located at the North Parking Lot (Blue Sign).</div>
+                    </div>
+                    <div class="checklist-item">
+                        <i class="fas fa-check-circle text-success mt-1 me-3"></i>
+                        <div><strong>Stop Work Immediately:</strong> When the alarm sounds, shut down machinery safely if time permits, then leave.</div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <div class="mx-6"><a href="https://en.wikipedia.org/wiki/Emergency_management" >More</a></div>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Materials Modal -->
+    <div class="modal fade" id="modalMaterial" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-boxes me-2"></i>Materials Handling Guide</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>Manual Lifting Technique (The T.I.L.E. Principle):</h6>
+                    <ul class="list-group mb-3">
+                        <li class="list-group-item"><strong>T</strong>ask: Does it involve twisting or stooping?</li>
+                        <li class="list-group-item"><strong>I</strong>ndividual: Is it too heavy for you? Ask for help.</li>
+                        <li class="list-group-item"><strong>L</strong>oad: Is the load unstable or sharp?</li>
+                        <li class="list-group-item"><strong>E</strong>nvironment: Is the floor slippery?</li>
+                    </ul>
+                    <h6>Forklift Zone Rules:</h6>
+                    <div class="checklist-item">
+                        <i class="fas fa-exclamation-circle text-danger mt-1 me-3"></i>
+                        <div>Pedestrians must make eye contact with drivers before crossing aisles. Never assume they see you.</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="mx-6"><a href="https://en.wikipedia.org/wiki/Material_handling" >More</a></div>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Robotics Modal -->
+    <div class="modal fade" id="modalRobot" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-robot me-2"></i>Automation & Robotics Safety</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>QuickShip uses AGVs (Automated Guided Vehicles) for pallet transport.</p>
+                    <h6>Safety with AGVs:</h6>
+                    <ol class="list-group list-group-numbered mb-3">
+                        <li class="list-group-item">Never stand in the "Yellow Tape" path of an AGV.</li>
+                        <li class="list-group-item">Do not place obstacles (boxes/pallets) on the AGV track.</li>
+                        <li class="list-group-item">If an AGV is stuck, do not push it. Call maintenance.</li>
+                    </ol>
+                    <div class="alert alert-info">
+                        <strong>Sensor Blind Spots:</strong> Robots have sensors, but they cannot stop instantly. Maintain a 3-foot distance.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="mx-6"><a href="https://en.wikipedia.org/wiki/Automation" >More</a></div>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. Chemicals Modal -->
+    <div class="modal fade" id="modalChemical" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-flask me-2"></i>Hazardous Chemicals Protocol</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>Understanding SDS (Safety Data Sheets):</h6>
+                    <p>Every chemical in the warehouse has a corresponding SDS sheet located in the Red Binder at the Supervisor's desk. Read it BEFORE handling.</p>
+                    
+                    <h6>In Case of Spill:</h6>
+                    <div class="checklist-item">
+                        <i class="fas fa-shield-alt text-primary mt-1 me-3"></i>
+                        <div><strong>1. Isolate:</strong> Cordon off the area immediately.</div>
+                    </div>
+                    <div class="checklist-item">
+                        <i class="fas fa-shield-alt text-primary mt-1 me-3"></i>
+                        <div><strong>2. Protect:</strong> Put on chemical-resistant gloves and goggles.</div>
+                    </div>
+                    <div class="checklist-item">
+                        <i class="fas fa-shield-alt text-primary mt-1 me-3"></i>
+                        <div><strong>3. Contain:</strong> Use the "Spill Kit" absorbent socks to stop spreading.</div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="mx-6"><a href="https://en.wikipedia.org/wiki/Chemical_hazard" >More</a></div>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. Electrical Modal -->
+    <div class="modal fade" id="modalElectrical" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-bolt me-2"></i>Electrical Hazards</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>Common Hazards to Report:</h6>
+                    <ul>
+                        <li>Overloaded power strips (Daisy chaining).</li>
+                        <li>Frayed or damaged charging cables for scanners.</li>
+                        <li>Water leaks near electrical panels.</li>
+                    </ul>
+                    <div class="alert alert-danger">
+                        <strong>Warning:</strong> Only certified electricians are allowed to open breaker panels. If you see an open panel, cordon it off and report it.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="mx-6"><a href="https://en.wikipedia.org/wiki/Electrical_safety_standards" >More</a></div>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. LOTO Modal -->
+    <div class="modal fade" id="modalLOTO" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-lock me-2"></i>Lockout / Tagout (LOTO)</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <h6>The 6 Steps of LOTO:</h6>
+                    <ol class="list-group list-group-numbered mb-3">
+                        <li class="list-group-item"><strong>Preparation:</strong> Notify affected employees.</li>
+                        <li class="list-group-item"><strong>Shutdown:</strong> Turn off the machine normally.</li>
+                        <li class="list-group-item"><strong>Isolation:</strong> Disconnect from energy source.</li>
+                        <li class="list-group-item"><strong>Lockout/Tagout:</strong> Apply your personal lock and tag.</li>
+                        <li class="list-group-item"><strong>Stored Energy Check:</strong> Release tension/pressure.</li>
+                        <li class="list-group-item"><strong>Verification:</strong> Try to turn it on to ensure it's dead.</li>
+                    </ol>
+                    <p class="text-muted small text-center"><em>"One key, one lock, one person."</em></p>
+                </div>
+                <div class="modal-footer">
+                    <div class="mx-6"><a href="https://en.wikipedia.org/wiki/Lockout%E2%80%93tagout" >More</a></div>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Mark Complete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. FOOTER -->
+    <footer class="text-center text-lg-start">
+        <div class="container pb-3">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h5 class="text-white mb-3">QuickShip Training Center</h5>
+                    <p class="small">Completion of these modules is mandatory for all floor staff.</p>
+                </div>
+            </div>
+            <div class="text-center pt-3 border-top border-secondary mt-3">
+                <small>© 2025 QuickShip. <a href="home.html" class="text-decoration-none text-info">Return Home</a></small>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
